@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<title>Lower Third</title>
+
+<style>
+body {
+    margin: 0;
+    background: transparent;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: Arial;
+}
+
+.box {
+    position: absolute;
+    left: 80px;
+    bottom: 80px;
+    width: 1600px;
+    height: 200px;
+    background: rgba(20,20,20,0.9);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 40px;
+}
+
+.text {
+    flex: 1;
+}
+
+.name {
+    font-size: 64px;
+    color: white;
+    font-weight: bold;
+}
+
+.title {
+    font-size: 36px;
+    color: #ccc;
+}
+
+.logo img {
+    max-height: 140px;
+    max-width: 260px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <div class="text">
+        <div class="name" id="name">...</div>
+        <div class="title" id="title">...</div>
+    </div>
+
+    <div class="logo">
+        <img id="logo" src="logo.png">
+    </div>
+</div>
+
+<script>
+async function update() {
+    try {
+        const res = await fetch("graphic.json?cache=" + Date.now());
+        const data = await res.json();
+
+        document.getElementById("name").innerText = data.name;
+        document.getElementById("title").innerText = data.title;
+        document.getElementById("logo").src = data.logo;
+    } catch (e) {
+        console.log("waiting for json...");
+    }
+}
+
+setInterval(update, 300);
+update();
+</script>
+
+</body>
+</html>
